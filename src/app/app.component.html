@@ -1,0 +1,67 @@
+<header class="header">
+  <form
+    (ngSubmit)="catsFilter()"
+    [formGroup]="catsFilterForm"
+    class="form"
+  >
+    <label class="form__label">
+      <select
+        formControlName="breed"
+        class="form__select"
+      >
+        <option
+          value="all"
+          class="form__option"
+        >
+          Mix
+        </option>
+
+        <option
+          *ngFor="let breed of breeds"
+          [value]="breed.id"
+          class="form__option"
+        >
+        {{ breed.id.charAt(0).toUpperCase() + breed.id.slice(1) }}
+        </option>
+      </select>
+    </label>
+
+    <label class="form__label">
+      <select
+        formControlName="limit"
+        class="form__select"
+      >
+        <option
+          *ngFor="let limit of limits"
+          [value]="limit"
+          class="form__option"
+        >
+        {{ limit }}
+        </option>
+      </select>
+    </label>
+
+    <button
+      type="submit"
+      class="form__button"
+    >
+      Filter
+    </button>
+  </form>
+</header>
+
+<main class="container">
+  <section class="photo-list" *ngIf="!isLoading; else loader">
+    <ul class="cats">
+      <li class="cat" *ngFor="let cat of cats">
+        <img class="cat__img" [src]="cat.url">
+      </li>
+    </ul>
+  </section>
+
+  <ng-template #loader>
+    <div class="loader-container">
+      <app-loader></app-loader>
+    </div>
+  </ng-template>
+</main>
