@@ -1,15 +1,22 @@
 .header {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  gap: 20px;
+
   background-color: #676be9;
   height: 96px;
   padding: 20px;
-}
 
-.form {
-  margin-right: 20px;
+  @media (max-width: 505px) {
+    justify-content: center;
+    grid-template-columns: 150px 150px;
+    padding: 20px 10px;
+    gap: 10px;
+  }
 }
 
 .container {
-  padding: 50px 200px;
+  padding: 50px 100px;
   height: calc(100vh - 96px);
   overflow-y: auto;
 
@@ -20,6 +27,10 @@
   &::-webkit-scrollbar-thumb {
     background-color: #676be9;
     border-radius: 50px;
+  }
+
+  @media (max-width: 505px) {
+    padding: 30px 50px;
   }
 }
 
