@@ -1,10 +1,17 @@
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { CatService } from '../services/cat.service';
 import { Injectable } from '@angular/core';
+<<<<<<< HEAD
 import { Cat } from '../types/Cat';
 
 export interface CatStateModel {
   cats: Cat[];
+=======
+import { Cats } from '../types/Cat';
+
+export interface CatStateModel {
+  cats: Cats[];
+>>>>>>> be3534c (add rxjs and ngxs)
   loading: boolean;
 }
 
@@ -36,7 +43,10 @@ export class CatState {
 
     try {
       const { data } = await this.catService.getCats(breed, limit);
+<<<<<<< HEAD
 
+=======
+>>>>>>> be3534c (add rxjs and ngxs)
       ctx.patchState({ cats: data, loading: false });
     } catch (error) {
       console.error('Failed to get cats', error);
