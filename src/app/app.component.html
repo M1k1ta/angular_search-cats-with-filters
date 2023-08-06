@@ -1,6 +1,5 @@
 <header class="header">
   <form
-    (ngSubmit)="catsFilter()"
     [formGroup]="catsFilterForm"
     class="form"
   >
@@ -21,7 +20,7 @@
           [value]="breed.id"
           class="form__option"
         >
-        {{ breed.id.charAt(0).toUpperCase() + breed.id.slice(1) }}
+        {{ breed.name }}
         </option>
       </select>
     </label>
@@ -40,20 +39,13 @@
         </option>
       </select>
     </label>
-
-    <button
-      type="submit"
-      class="form__button"
-    >
-      Filter
-    </button>
   </form>
 </header>
 
 <main class="container">
-  <section class="photo-list" *ngIf="!isLoading; else loader">
+  <section class="photo-list" *ngIf="!(cats$ | async)?.loading; else loader">
     <ul class="cats">
-      <li class="cat" *ngFor="let cat of cats">
+      <li class="cat" *ngFor="let cat of (cats$ | async)?.cats">
         <img class="cat__img" [src]="cat.url">
       </li>
     </ul>

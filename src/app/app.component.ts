@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { CatService } from './services/cat.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Select, Store } from '@ngxs/store';
+import { CatState, GetCats } from './state/cat.state';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Cats } from './types/Cat';
+import { Breed } from './types/Breed';
 
 @Component({
   selector: 'app-root',
@@ -8,18 +14,30 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  cats: any = [];
-  breeds: any = [];
-  catsFilterForm = new FormGroup({
-    breed: new FormControl('all'),
-    limit: new FormControl(10),
-  });
+  breeds: Breed[] = [];
   limits = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-  isLoading = false;
+  catsFilterForm = new FormGroup({
+    breed: new FormControl('all', {
+      nonNullable: true,
+    }),
+    limit: new FormControl(10, {
+      nonNullable: true,
+    }),
+  });
+
+  @Select(CatState.getCats) cats$!: Observable<{ cats: Cats[], loading: boolean }>;
 
   constructor(
     private catService: CatService,
-  ) {}
+    private store: Store,
+  ) {
+    this.catsFilterForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(() => this.catsFilter());
+  }
 
   get breed() {
     return this.catsFilterForm.get('breed') as FormControl;
@@ -35,31 +53,18 @@ export class AppComponent {
 
       this.breeds = data;
     } catch {
-      throw new Error('Fail getting breeds');
+      console.error('Fail getting breeds');
     }
-  }
-
-  async getCats(breed: string, limit: number) {
-    try {
-      this.isLoading = true;
-
-      const { data } = await this.catService.getCats(breed, limit);
-
-      this.cats = data;
-    } catch {
-      throw new Error('Fail getting cats');
-    } finally {
-      this.isLoading = false;
-    }
-
   }
 
   ngOnInit() {
-    this.getCats(this.breed.value, this.limit.value);
+    this.store.dispatch(new GetCats(this.breed.value, this.limit.value));
     this.getBreeds();
   }
 
   catsFilter() {
-    this.getCats(this.breed.value, this.limit.value);
+    const { breed = 'all', limit = 10 } = this.catsFilterForm.value;
+
+    this.store.dispatch(new GetCats(breed, limit));
   }
 }
