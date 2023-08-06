@@ -10,6 +10,12 @@ MIT
 @angular/platform-browser
 MIT
 
+@ngxs/devtools-plugin
+MIT
+
+@ngxs/store
+MIT
+
 axios
 MIT
 # Copyright (c) 2014-present Matt Zabriskie & Collaborators
