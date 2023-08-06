@@ -1,38 +1,16 @@
 .header {
   background-color: #676be9;
-  height: 70px;
+  height: 96px;
   padding: 20px;
 }
 
 .form {
-  &__label {
-    margin-right: 20px;
-  }
-
-  &__select {
-    height: 30px;
-    width: 150px;
-    background-color: #dbdcff;
-    border-radius: 5px;
-
-    &::-webkit-scrollbar {
-      width: 3px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: #676be9;
-      border-radius: 50px;
-    }
-
-    &:focus {
-      outline: 2px solid #dbdcff;
-    }
-  }
+  margin-right: 20px;
 }
 
 .container {
-  padding: 40px 200px;
-  height: calc(100vh - 70px);
+  padding: 50px 200px;
+  height: calc(100vh - 96px);
   overflow-y: auto;
 
   &::-webkit-scrollbar {

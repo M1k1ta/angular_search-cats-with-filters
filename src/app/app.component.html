@@ -1,49 +1,59 @@
 <header class="header">
-  <form
+  <mat-form-field
     [formGroup]="catsFilterForm"
     class="form"
   >
-    <label class="form__label">
-      <select
-        formControlName="breed"
-        class="form__select"
+    <mat-label class="form__label">
+      Beerd
+    </mat-label>
+    <mat-select
+      formControlName="breed"
+      class="form__select"
+    >
+      <mat-option
+        value="all"
+        class="form__option"
       >
-        <option
-          value="all"
-          class="form__option"
-        >
-          Mix
-        </option>
+        Mix
+      </mat-option>
 
-        <option
-          *ngFor="let breed of breeds"
-          [value]="breed.id"
-          class="form__option"
-        >
+      <mat-option
+        *ngFor="let breed of breeds"
+        [value]="breed.id"
+        class="form__option"
+      >
         {{ breed.name }}
-        </option>
-      </select>
-    </label>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <label class="form__label">
-      <select
-        formControlName="limit"
-        class="form__select"
+  <mat-form-field
+    [formGroup]="catsFilterForm"
+    class="form"
+  >
+    <mat-label class="form__label">
+      Limit
+    </mat-label>
+    <mat-select
+      formControlName="limit"
+      class="form__select"
+    >
+      <mat-option
+        *ngFor="let limit of limits"
+        [value]="limit"
+        class="form__option"
       >
-        <option
-          *ngFor="let limit of limits"
-          [value]="limit"
-          class="form__option"
-        >
         {{ limit }}
-        </option>
-      </select>
-    </label>
-  </form>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </header>
 
 <main class="container">
-  <section class="photo-list" *ngIf="!(cats$ | async)?.loading; else loader">
+  <section
+    class="photo-list"
+    *ngIf="!(cats$ | async)?.loading; else loader"
+  >
     <ul class="cats">
       <li class="cat" *ngFor="let cat of (cats$ | async)?.cats">
         <img class="cat__img" [src]="cat.url">

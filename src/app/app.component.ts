@@ -5,7 +5,8 @@ import { Select, Store } from '@ngxs/store';
 import { CatState, GetCats } from './state/cat.state';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Cats } from './types/Cat';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Cat } from './types/Cat';
 import { Breed } from './types/Breed';
 
 @Component({
@@ -25,11 +26,13 @@ export class AppComponent {
     }),
   });
 
-  @Select(CatState.getCats) cats$!: Observable<{ cats: Cats[], loading: boolean }>;
+  @Select(CatState.getCats) cats$!: Observable<{ cats: Cat[], loading: boolean }>;
 
   constructor(
     private catService: CatService,
     private store: Store,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
     this.catsFilterForm.valueChanges
       .pipe(
@@ -64,6 +67,11 @@ export class AppComponent {
 
   catsFilter() {
     const { breed = 'all', limit = 10 } = this.catsFilterForm.value;
+
+    this.router.navigate([], {
+      queryParams: { breed, limit },
+      queryParamsHandling: 'merge',
+    });
 
     this.store.dispatch(new GetCats(breed, limit));
   }

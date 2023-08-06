@@ -1,4 +1,4 @@
-export interface Cats {
+export interface Cat {
   breeds: string[];
   categories: {
     id: number,
