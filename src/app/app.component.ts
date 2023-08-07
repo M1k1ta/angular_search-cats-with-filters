@@ -61,7 +61,13 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.store.dispatch(new GetCats(this.breed.value, this.limit.value));
+    this.route.queryParams.subscribe(params => {
+      const breed = params['breed'] || 'all';
+      const limit = +params['limit'] || 10;
+
+      this.catsFilterForm.setValue({ breed, limit });
+    });
+
     this.getBreeds();
   }
 
