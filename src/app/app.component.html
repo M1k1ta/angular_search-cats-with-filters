@@ -1,0 +1,69 @@
+<header class="header">
+  <mat-form-field
+    [formGroup]="catsFilterForm"
+    class="form"
+  >
+    <mat-label class="form__label">
+      Beerd
+    </mat-label>
+    <mat-select
+      formControlName="breed"
+      class="form__select"
+    >
+      <mat-option
+        value="all"
+        class="form__option"
+      >
+        Mix
+      </mat-option>
+
+      <mat-option
+        *ngFor="let breed of breeds"
+        [value]="breed.id"
+        class="form__option"
+      >
+        {{ breed.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field
+    [formGroup]="catsFilterForm"
+    class="form"
+  >
+    <mat-label class="form__label">
+      Limit
+    </mat-label>
+    <mat-select
+      formControlName="limit"
+      class="form__select"
+    >
+      <mat-option
+        *ngFor="let limit of limits"
+        [value]="limit"
+        class="form__option"
+      >
+        {{ limit }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</header>
+
+<main class="container">
+  <section
+    class="photo-list"
+    *ngIf="!(cats$ | async)?.loading; else loader"
+  >
+    <ul class="cats">
+      <li class="cat" *ngFor="let cat of (cats$ | async)?.cats">
+        <img class="cat__img" [src]="cat.url">
+      </li>
+    </ul>
+  </section>
+
+  <ng-template #loader>
+    <div class="loader-container">
+      <app-loader></app-loader>
+    </div>
+  </ng-template>
+</main>
