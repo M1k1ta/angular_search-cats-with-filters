@@ -13,6 +13,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ]
 
 @NgModule({
