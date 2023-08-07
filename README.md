@@ -16,3 +16,5 @@ On Sunday I coded. I created Markap and add a few styles. I got data using API(h
 
 After, I added a router to save breed and limit in the URL.
 And at the end, I thought about how to add Angular Material. And It was my big mistake. Because Angular Material is a library that gives ready components with styles. I didn't want to spend more time changing the markup. So I solve add Angular Material only to select. 
+
+And I cheked and fix my code on Monday. It was small fixes, but with my old laptop I spend more time on it that I want.
